@@ -89,6 +89,7 @@ export default function Panel(): JSX.Element {
   const [showFaq, setShowFaq] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const [recording, setRecording] = useState(false)
+  const [speak, setSpeak] = useState(false)
   const [providerLabel, setProviderLabel] = useState<string | null>(null)
   const [input, setInput] = useState('')
 
@@ -102,13 +103,16 @@ export default function Panel(): JSX.Element {
   const streamedRef = useRef('')
 
   useEffect(() => {
-    chrome.storage.local.get(['apiKeys', 'providerId', 'autoAnnotate']).then(({ apiKeys, providerId, autoAnnotate }) => {
-      const keys = (apiKeys ?? {}) as Record<string, string>
-      const active = (providerId ?? 'gemini') as string
-      setHasKey(Boolean(keys[active]))
-      setProviderLabel(PROVIDER_LABEL[active] ?? null)
-      setAuto(autoAnnotate !== false)
-    })
+    chrome.storage.local
+      .get(['apiKeys', 'providerId', 'autoAnnotate', 'speakSteps'])
+      .then(({ apiKeys, providerId, autoAnnotate, speakSteps }) => {
+        setSpeak(speakSteps === true)
+        const keys = (apiKeys ?? {}) as Record<string, string>
+        const active = (providerId ?? 'gemini') as string
+        setHasKey(Boolean(keys[active]))
+        setProviderLabel(PROVIDER_LABEL[active] ?? null)
+        setAuto(autoAnnotate !== false)
+      })
     // Opening the panel is a connect, which is what fetches the initial usage numbers.
     post({ type: 'get-usage' })
     void chrome.runtime
@@ -373,6 +377,26 @@ export default function Panel(): JSX.Element {
                       {auto
                         ? 'Reads each page you open. Uses a request every time.'
                         : 'Only reads a page when you ask.'}
+                    </span>
+                  </button>
+
+                  <button
+                    role="menuitem"
+                    onClick={() => {
+                      const next = !speak
+                      setSpeak(next)
+                      // The content script watches storage directly, so no message needed.
+                      void chrome.storage.local.set({ speakSteps: next })
+                      setMenuOpen(false)
+                    }}
+                  >
+                    <span className="menu-label">
+                      Read steps aloud <em>{speak ? 'on' : 'off'}</em>
+                    </span>
+                    <span className="menu-desc">
+                      {speak
+                        ? 'Each step is spoken as it is highlighted.'
+                        : 'Hear each step while you look at the screen. Your device speaks it — nothing is sent anywhere.'}
                     </span>
                   </button>
 

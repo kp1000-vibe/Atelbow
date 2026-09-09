@@ -1,4 +1,5 @@
 import { nodeRegistry } from './extract'
+import { speakStep, stopSpeaking } from './speech'
 import {
   VERDICT_STYLE,
   type Annotation,
@@ -407,6 +408,7 @@ export function clearAnnotations(): void {
   // replaceChildren rather than innerHTML: Trusted Types rejects innerHTML assignment even
   // for an empty string on strict-CSP sites.
   layer?.replaceChildren()
+  stopSpeaking()
   detachStepWatcher?.()
   detachStepWatcher = null
   detachReflow?.()
@@ -784,6 +786,9 @@ function drawStep(): void {
   calloutMoved = false
   placeCallout()
   callout.style.visibility = ''
+
+  // Spoken at the moment the step appears, so the voice and the highlight land together.
+  speakStep(stepIndex, steps.length, annotation.label, annotation.note)
 
   // Watch the real control: doing the step moves the walkthrough on by itself.
   watchForStepDone(node ?? undefined, () => {
