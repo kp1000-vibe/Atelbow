@@ -1,0 +1,1061 @@
+:root {
+  /* Warm neutrals rather than grey: the ground carries the gold, so the purple stays free
+     to mean "interactive" and nothing else. */
+  --bg: #fffdf8;
+  --bg-subtle: #fbf5e9;
+  --bg-sunken: #f4ecda;
+  --border: #ece0c9;
+  --border-strong: #dccdac;
+  --text: #211c12;
+  --text-muted: #6f6552;
+  --text-faint: #94866c;
+
+  /* Gold is structural — rules, numerals, surfaces. Never a button or a selected state. */
+  --gold: #7a5c0b;
+  --gold-soft: #f7ecd2;
+  --gold-line: #e3d0a6;
+
+  /* Unchanged: every interactive signal in the app. */
+  --accent: #5b4bdb;
+  --accent-hover: #4c3dc4;
+  --accent-soft: #eeecfd;
+
+  --danger-bg: #fef2f2;
+  --danger-border: #fecaca;
+  --danger-text: #b91c1c;
+  --success-text: #15803d;
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --font: -apple-system, 'Segoe UI Variable Text', 'Segoe UI', Roboto, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  font-family: var(--font);
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.panel.loading {
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+}
+
+.panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.panel-header svg {
+  display: block;
+  flex: none;
+}
+
+
+
+.header-actions {
+  display: flex;
+  gap: 4px;
+}
+
+.text-button {
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--text-muted);
+  font-size: 12px;
+  font-weight: 500;
+  padding: 5px 8px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+}
+
+.text-button:hover:not(:disabled) {
+  background: var(--bg-sunken);
+  color: var(--text);
+}
+
+.text-button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.text-button.active {
+  background: var(--accent-soft);
+  color: var(--accent);
+  border-color: #c9c2f5;
+}
+
+.scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.empty p {
+  margin: 0 0 12px;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.suggestions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: flex-start;
+}
+
+.followups {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 2px;
+}
+
+.suggestion {
+  background: var(--bg);
+  border: 1px solid var(--border-strong);
+  color: var(--text);
+  font: inherit;
+  font-size: 12px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  cursor: pointer;
+  text-align: left;
+}
+
+.suggestion:hover {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.bubble {
+  padding: 8px 12px;
+  border-radius: var(--radius-lg);
+  max-width: 94%;
+  white-space: pre-wrap;
+  line-height: 1.55;
+  word-break: break-word;
+}
+
+.bubble.user {
+  align-self: flex-end;
+  background: var(--accent);
+  color: #fff;
+  border-bottom-right-radius: var(--radius-sm);
+}
+
+.bubble.assistant {
+  align-self: flex-start;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  border-bottom-left-radius: var(--radius-sm);
+}
+
+.bubble.thinking {
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.bubble.error {
+  align-self: stretch;
+  max-width: 100%;
+  background: var(--danger-bg);
+  border: 1px solid var(--danger-border);
+  color: var(--danger-text);
+}
+
+.page-note {
+  align-self: stretch;
+  font-size: 11.5px;
+  line-height: 1.5;
+  color: #6b5a17;
+  background: #fdf8e7;
+  border: 1px solid #ecdca8;
+  border-radius: var(--radius-sm);
+  padding: 7px 10px;
+}
+
+.marked-note {
+  align-self: flex-start;
+  font-size: 11px;
+  color: var(--accent);
+  background: var(--accent-soft);
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+}
+
+
+
+/* Fill approval */
+
+.fill-card {
+  align-self: stretch;
+  background: var(--bg);
+  border: 1px solid #c9c2f5;
+  border-radius: var(--radius-lg);
+  padding: 12px;
+  box-shadow: 0 2px 8px rgba(16, 16, 20, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.fill-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.fill-head strong {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.fill-badge {
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.fill-row.off {
+  opacity: 0.45;
+}
+
+.fill-row label {
+  display: block;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-muted);
+  margin-bottom: 3px;
+}
+
+.fill-input {
+  display: flex;
+  gap: 4px;
+}
+
+.fill-input input {
+  flex: 1;
+  min-width: 0;
+}
+
+.fill-skip {
+  background: transparent;
+  border: 1px solid var(--border-strong);
+  color: var(--text-muted);
+  font: inherit;
+  font-size: 11px;
+  padding: 0 8px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+}
+
+.fill-skip:hover:not(:disabled) {
+  background: var(--bg-sunken);
+  color: var(--text);
+}
+
+.fill-note {
+  margin: 0;
+  font-size: 11px;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.fill-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+button.secondary {
+  background: var(--bg);
+  border: 1px solid var(--border-strong);
+  color: var(--text);
+  border-radius: var(--radius-md);
+  padding: 8px 14px;
+  font: inherit;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+button.secondary:hover:not(:disabled) {
+  background: var(--bg-subtle);
+}
+
+.usage-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  font-size: 11px;
+  color: var(--text-faint);
+  border-top: 1px solid var(--border);
+}
+
+.usage-track {
+  flex: 1;
+  height: 4px;
+  min-width: 40px;
+  background: var(--bg-sunken);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.usage-fill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 240ms ease, background 240ms ease;
+}
+
+.usage-cost {
+  white-space: nowrap;
+  margin-left: auto;
+}
+
+.composer {
+  display: flex;
+  gap: 8px;
+  padding: 12px 16px;
+  border-top: 1px solid var(--border);
+}
+
+textarea,
+input[type='password'],
+input[type='text'],
+input[type='email'] {
+  background: var(--bg);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  color: var(--text);
+  padding: 8px;
+  font-family: inherit;
+  font-size: 13px;
+  width: 100%;
+}
+
+textarea {
+  flex: 1;
+  resize: none;
+}
+
+textarea:focus,
+input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+button.primary {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-md);
+  padding: 8px 14px;
+  font: inherit;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+button.primary:hover:not(:disabled) {
+  background: var(--accent-hover);
+}
+
+button.primary:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+/* Setup */
+
+
+
+
+
+
+
+.field-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-top: 8px;
+}
+
+.fine {
+  font-size: 11px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.mono {
+  font-family: ui-monospace, 'Cascadia Code', monospace;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 5px;
+  border: 3px solid var(--bg);
+}
+
+/* ---------- Setup ---------- */
+
+.setup {
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+  padding: 28px 20px 32px;
+  overflow-y: auto;
+  height: 100vh;
+}
+
+.setup-hero {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--gold-line);
+}
+
+.setup-hero h1 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+
+.setup-hero p {
+  margin: 0;
+  color: var(--text-muted);
+  line-height: 1.6;
+  max-width: 46ch;
+}
+
+.setup-step {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.step-head {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+/* Numbered because setup genuinely is a sequence — the key can't be checked before a
+   provider is chosen. */
+.step-num {
+  width: 20px;
+  height: 20px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--gold-soft);
+  color: var(--gold);
+  border: 1px solid var(--gold-line);
+  font-size: 11px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.step-head h2 {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+}
+
+.step-head em {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 11px;
+  color: var(--text-faint);
+  margin-left: 4px;
+}
+
+.provider-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.provider {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 12px;
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 120ms ease, background 120ms ease, box-shadow 120ms ease;
+}
+
+.provider:hover {
+  border-color: var(--border-strong);
+  background: var(--bg-subtle);
+}
+
+.provider.on {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.provider-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.provider.on .provider-name {
+  color: var(--accent);
+}
+
+.provider-cost {
+  font-size: 10.5px;
+  color: var(--text-faint);
+}
+
+.provider.on .provider-cost {
+  color: var(--accent);
+  opacity: 0.85;
+}
+
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.setup input {
+  height: 40px;
+  border-radius: 10px;
+  padding: 0 12px;
+}
+
+.hint-text {
+  margin: 0;
+  font-size: 11.5px;
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+
+.setup-caution,
+.setup-error {
+  border-radius: 8px;
+  padding: 9px 11px;
+  font-size: 11.5px;
+  line-height: 1.5;
+}
+
+.setup-caution {
+  background: #fdf8e7;
+  border: 1px solid #ecdca8;
+  color: #6b5a17;
+}
+
+.setup-error {
+  background: var(--danger-bg);
+  border: 1px solid var(--danger-border);
+  color: var(--danger-text);
+}
+
+/* The reassurance the whole product depends on, so it gets its own surface rather than
+   trailing off as fine print. */
+.privacy-card {
+  background: var(--gold-soft);
+  border: 1px solid var(--gold-line);
+  border-radius: 12px;
+  padding: 14px 16px;
+}
+
+.privacy-card h3 {
+  margin: 0 0 8px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.privacy-card ul {
+  margin: 0;
+  padding-left: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--text-muted);
+}
+
+.setup-cta {
+  height: 44px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* ---------- Key walkthrough & FAQ ---------- */
+
+.howto {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg-subtle);
+  padding: 10px 12px;
+}
+
+.howto summary {
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--gold);
+  list-style: none;
+}
+
+.howto summary::-webkit-details-marker {
+  display: none;
+}
+
+/* A rotating caret rather than the default triangle, which sits oddly against the text. */
+.howto summary::before {
+  content: '›';
+  display: inline-block;
+  margin-right: 7px;
+  transition: transform 140ms ease;
+}
+
+.howto[open] summary::before {
+  transform: rotate(90deg);
+}
+
+.howto ol {
+  margin: 10px 0 6px;
+  padding-left: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+
+.faq-title {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.faq-list {
+  gap: 0;
+}
+
+.faq-item {
+  border-bottom: 1px solid var(--border);
+  padding: 12px 0;
+}
+
+.faq-item:first-child {
+  padding-top: 0;
+}
+
+.faq-item summary {
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.45;
+  list-style: none;
+  display: flex;
+  gap: 8px;
+}
+
+.faq-item summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq-item summary::before {
+  content: '›';
+  flex: none;
+  color: var(--text-faint);
+  transition: transform 140ms ease;
+}
+
+.faq-item[open] summary::before {
+  transform: rotate(90deg);
+}
+
+.faq-item[open] summary {
+  color: var(--accent);
+}
+
+.faq-item p {
+  margin: 8px 0 0 16px;
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: var(--text-muted);
+}
+
+.howto summary:focus-visible,
+.faq-item summary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Lockup: mark and name on one baseline, tagline tucked under the name rather than the mark. */
+.wordmark {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.wordmark h1 {
+  margin: 0;
+  line-height: 1.1;
+}
+
+.tagline {
+  margin: 3px 0 0;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: var(--gold);
+}
+
+/* ---------- Try-before-key demo ---------- */
+
+/* Sits above the setup steps: seeing it work is what earns the right to ask for a key. */
+.demo-block {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.demo-btn {
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: 12px;
+  border: 1px solid var(--accent);
+  background: var(--accent);
+  color: #fff;
+  font: 600 14px/1.2 inherit;
+  cursor: pointer;
+  box-shadow: 0 2px 10px rgba(91, 75, 219, 0.28);
+  transition: background 130ms ease, box-shadow 130ms ease, transform 130ms ease;
+}
+
+.demo-btn:hover:not(:disabled) {
+  background: var(--accent-hover);
+  box-shadow: 0 4px 16px rgba(91, 75, 219, 0.34);
+}
+
+.demo-btn:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.demo-btn:disabled {
+  opacity: 0.7;
+  cursor: default;
+}
+
+.demo-hint {
+  margin: 0;
+  font-size: 11.5px;
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+
+.demo-done {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start;
+  background: var(--gold-soft);
+  border: 1px solid var(--gold-line);
+  border-radius: 12px;
+  padding: 14px 16px;
+}
+
+.demo-done strong {
+  font-size: 13px;
+  color: var(--text);
+}
+
+.demo-done p {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.55;
+  color: var(--text-muted);
+}
+
+.demo-again {
+  background: transparent;
+  border: 1px solid var(--gold-line);
+  color: var(--gold);
+  font: 500 11.5px/1 inherit;
+  padding: 7px 11px;
+  border-radius: 7px;
+  cursor: pointer;
+}
+
+.demo-again:hover {
+  background: rgba(255, 255, 255, 0.55);
+}
+
+/* ---------- Account controls ---------- */
+
+.account-card {
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.account-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.account-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.account-row strong {
+  font-size: 14px;
+}
+
+.account-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.account-confirm {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.account-confirm p {
+  margin: 0;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--danger-text);
+}
+
+/* Understated until confirmed — destructive actions shouldn't compete for the eye. */
+.danger-link {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font: 500 12px/1 inherit;
+  padding: 8px 6px;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.danger-link:hover {
+  color: var(--danger-text);
+}
+
+.danger-btn {
+  background: var(--danger-text);
+  border: none;
+  color: #fff;
+  font: 600 12px/1 inherit;
+  padding: 9px 14px;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+}
+
+.danger-btn:hover {
+  filter: brightness(1.08);
+}
+
+/* ---------- Bold references in answers ---------- */
+
+/* The model names controls in **bold**; make them look like the thing on the page. */
+.bubble .ref {
+  font-weight: 600;
+  color: var(--accent);
+  background: var(--accent-soft);
+  padding: 1px 5px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+/* ---------- Overflow menu ---------- */
+
+.menu-wrap {
+  position: relative;
+}
+
+/* Catches the click that dismisses the menu, without dimming anything. */
+.menu-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+}
+
+.menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  z-index: 11;
+  width: 244px;
+  background: var(--bg);
+  border: 1px solid var(--border-strong);
+  border-radius: 10px;
+  box-shadow: 0 8px 26px rgba(24, 20, 12, 0.16);
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.menu button {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  align-items: flex-start;
+  text-align: left;
+  background: transparent;
+  border: none;
+  border-radius: 7px;
+  padding: 9px 10px;
+  cursor: pointer;
+  font: inherit;
+}
+
+.menu button:hover {
+  background: var(--bg-subtle);
+}
+
+.menu-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+/* State shown inline, so the item reads as a toggle rather than a command. */
+.menu-label em {
+  font-style: normal;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.menu-desc {
+  font-size: 11.5px;
+  line-height: 1.4;
+  color: var(--text-muted);
+}
+
+/* Heading for the follow-ups after a walkthrough — the offer is the next task, not a
+   change of subject. */
+.followup-label {
+  width: 100%;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+/* Header lockup. The provider line is deliberately quiet — it answers "whose AI is this?"
+   for anyone who wonders, without competing with the product name. */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-width: 0;
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+  min-width: 0;
+}
+
+.brand-text strong {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.brand-text span {
+  font-size: 10.5px;
+  color: var(--text-faint);
+  white-space: nowrap;
+}

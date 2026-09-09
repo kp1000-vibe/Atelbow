@@ -1,0 +1,26 @@
+{
+  "name": "screenpilot-extension",
+  "version": "0.1.0",
+  "description": "ScreenPilot \u2014 visual decision copilot for the web",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite build --watch --mode development",
+    "build": "vite build",
+    "typecheck": "tsc --noEmit",
+    "dev:server": "node scripts/dev-server.mjs",
+    "verify": "node scripts/verify-build.mjs"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/chrome": "^0.0.287",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.4",
+    "typescript": "^5.7.2",
+    "vite": "^5.4.11"
+  }
+}

@@ -1,0 +1,15 @@
+node_modules/
+out/
+dist/
+dist-electron/
+*.log
+.DS_Store
+
+# Secrets — never commit
+.env
+.env.local
+*.local
+
+# Build output
+extension/dist/
+console/dist/
