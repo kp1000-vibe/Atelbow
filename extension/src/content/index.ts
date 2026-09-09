@@ -2,6 +2,7 @@ import { collectPageContext } from './extract'
 import { runDemo } from './demo'
 import { applyFills } from './fill'
 import { clearAnnotations, isWalkthroughActive, renderAnnotations, setBadge } from './overlay'
+import { initSpeech } from './speech'
 import type { ContentRequest, ContentResponse, PageElement } from '../shared/types'
 
 /**
@@ -65,6 +66,7 @@ chrome.runtime.onMessage.addListener(
 // Show the pill as soon as the extension is live on this page, so the user can tell at a
 // glance that atElbow is watching — and, just as importantly, when it isn't.
 setBadge('idle')
+initSpeech()
 
 /**
  * Lets the page settle before auto-analysing. Firing at document_idle catches skeletons and
